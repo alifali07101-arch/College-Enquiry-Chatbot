@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Chat History — College Bot</title>
+  <link rel="stylesheet" href="static/style.css" />
+</head>
+<body>
+  <div class="nav">
+    <div class="brand">College Chatbot</div>
+    <div class="nav-right">
+      <a href="{{ url_for('index') }}">Home</a>
+      <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+  </div>
+
+  <div class="history-wrap">
+    <h2>Your Chat History</h2>
+    <div class="history-actions">
+      <button id="clearHistoryBtn" class="btn danger">🗑 Clear History</button>
+    </div>
+
+    <div class="history-list">
+      {% if history %}
+        {% for h in history %}
+        <div class="history-item">
+          <div class="h-left">
+            <strong>You:</strong>
+            <p>{{ h.user_message }}</p>
+          </div>
+          <div class="h-right">
+            <strong>Bot:</strong>
+            <p>{{ h.bot_reply }}</p>
+            <small>{{ h.timestamp }}</small>
+          </div>
+        </div>
+        {% endfor %}
+      {% else %}
+        <p>No history yet.</p>
+      {% endif %}
+    </div>
+    <a href="{{ url_for('index') }}" class="back-link">← Back to Chat</a>
+  </div>
+
+  <script>
+    document.getElementById("clearHistoryBtn").addEventListener("click", async function(){
+      if(!confirm("Clear all chat history?")) return;
+      const res = await fetch("/history/clear", { method: "POST" });
+      const data = await res.json();
+      if(data.status === "ok") {
+        alert("History cleared.");
+        window.location.reload();
+      } else {
+        alert("Error clearing history.");
+      }
+    });
+  </script>
+</body>
+</html>
