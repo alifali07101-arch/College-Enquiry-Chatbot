@@ -1,4 +1,4 @@
-# 🎓 Rungta International Skills University - AI Chatbot
+# 🎓 College Enquiry - AI Chatbot
 
 A smart, hybrid AI chatbot designed for college enquiry. It assists students and parents with admissions, fees, placements, and campus life queries using **Google Gemini AI** and a custom **Knowledge Base**.
 
